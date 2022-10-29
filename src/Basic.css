@@ -1,0 +1,59 @@
+:root{
+  --main-color: #307A59;
+  --secondary-color: #ACCABD;
+  --dark-100: #171725;
+  --dark-90: #44444F;
+  --dark-80: #696974;
+  --dark-70: #92929D;
+  --dark-60: #B5B5BE;
+  --dark-50: #D5D5DC;
+  --dark-40: #E2E2EA;
+  --dark-30: #F1F1F5;
+  --dark-20: #FAFAFB;
+  --dark-0: #FFFFFF;
+}
+
+/* titles */
+.main-title{
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.sub-title{
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+.content{
+  font-size: 1.125rem;
+  font-weight: 400;
+}
+
+.bold{
+  font-weight: 700;
+}
+
+p{
+  font-size: 1rem;
+}
+
+.small-text{
+  font-size: 0.75rem;
+}
+
+
+/* buttons */
+.btn{
+  max-width: 256px;
+  height: 48px;
+  background-color: var(--main-color);
+}
+
+.btn p {
+  line-height: 48px;
+  color: var(--dark-0);
+}
+
+.btn.sm{
+  max-width: 180px;
+}
