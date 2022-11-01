@@ -33,6 +33,7 @@ const Element = ({ red, className }) => {
 
 const MyMap = styled(Element)`
   padding: 0;
+  .leaflet-top, .leaflet-bottom{z-index:998;}
 `
 
 export default MyMap
