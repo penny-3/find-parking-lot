@@ -1,196 +1,125 @@
-import React from 'react'
+import React,{useState, useEffect} from 'react'
 import styled from 'styled-components'
 import SearchFilter from './SearchFilter.js'
+import ParkingLotDetail from './ParkingLotDetail.js'
 import '../Basic.css'
 
 
-const Element = ({ red, className }) => {
+const Element = ({ className, parks }) => {
+  let empty = {
+      "id" : "0",
+      "area" : "",
+      "name" : "",
+      "type" : "",
+      "type2" : "",
+      "summary" : "",
+      "address" : "",
+      "tel" : "",
+      "payex" : "",
+      "serviceTime" : "",
+      "tw97x" : "",
+      "tw97y" : "",
+      "totalcar" : 0,
+      "totalmotor" : 0,
+      "totalbike" : 0,
+      "totalbus" : 0,
+      "Pregnancy_First" : "0",
+      "Handicap_First" : "0",
+      "Taxi_OneHR_Free" : "0",
+      "AED_Equipment" : "0",
+      "CellSignal_Enhancement" : "0",
+      "Accessibility_Elevator" : "0",
+      "Phone_Charge" : "0",
+      "Child_Pickup_Area" : "0",
+      "FareInfo" : {
+        "WorkingDay" : [ {
+          "Period" : "00~09",
+          "Fare" : "0"
+        }, {
+          "Period" : "09~18",
+          "Fare" : "0"
+        }, {
+          "Period" : "18~24",
+          "Fare" : "0"
+        } ],
+        "Holiday" : [ {
+          "Period" : "00~09",
+          "Fare" : "0"
+        }, {
+          "Period" : "09~18",
+          "Fare" : "0"
+        }, {
+          "Period" : "18~24",
+          "Fare" : "0"
+        } ]
+      },
+      "EntranceCoord" : {
+        "EntrancecoordInfo" : [ {
+          "Xcod" : "",
+          "Ycod" : "",
+          "Address" : ""
+        }, {
+          "Xcod" : "",
+          "Ycod" : "",
+          "Address" : ""
+        }, {
+          "Xcod" : "",
+          "Ycod" : "",
+          "Address" : ""
+        } ]
+      }
+  }
+
+  const [target,updateTarget] = useState(empty)
+  const toggleUp = (e) => {
+    document.querySelector('.nav-wrap').classList.toggle('toggle')
+  }
+  const openModal = (e) => {
+    document.querySelector('.modal').classList.add('show')
+    updateTarget(parks.parks.filter((park) => park.id === e.currentTarget.id)[0])
+  }
+
+  console.log(parks)
+
 	return (
-		<div className={className + ' col-md-4 h-100 p-4'}>
+		<div className={className + ' col-md-4 h-100 pb-4 px-4 nav-wrap'}>
+      <div className='d-md-none text-center pb-1 pt-2 toggle-up'>
+        <i className="fa-solid fa-angle-up" onClick={toggleUp}></i>
+      </div>
       <SearchFilter/>
-      <div className='card-list'>
-        <div className='card'>
-          <div className='p-3'>
-            <h3 className='main-title'>內湖停車場</h3>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>114台北市內湖區金湖路46巷</p>
-            </div>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-map-pin"></i>
-              <div className='info'><span>200</span>公尺</div>
-            </div>
-            <div className='card-body p-0'>
-              <p>為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。</p>
-            </div>
-          </div>
-          <div className='card-footer d-flex'>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
-              <p className='info'>1</p>
-            </div>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
-              <p className='info'>10</p>
-            </div>
-          </div>
-        </div>
-        <div className='card'>
-          <div className='p-3'>
-            <h3 className='main-title'>內湖停車場</h3>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>114台北市內湖區金湖路46巷</p>
-            </div>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-map-pin"></i>
-              <div className='info'><span>200</span>公尺</div>
-            </div>
-            <div className='card-body p-0'>
-              <p>為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。</p>
-            </div>
-          </div>
-          <div className='card-footer d-flex'>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
-              <p className='info'>1</p>
-            </div>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
-              <p className='info'>10</p>
-            </div>
-          </div>
-        </div>
-        <div className='card'>
-          <div className='p-3'>
-            <h3 className='main-title'>內湖停車場</h3>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>114台北市內湖區金湖路46巷</p>
-            </div>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-map-pin"></i>
-              <div className='info'><span>200</span>公尺</div>
-            </div>
-            <div className='card-body p-0'>
-              <p>為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。</p>
-            </div>
-          </div>
-          <div className='card-footer d-flex'>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
-              <p className='info'>1</p>
-            </div>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
-              <p className='info'>10</p>
-            </div>
-          </div>
-        </div>
-        <div className='card'>
-          <div className='p-3'>
-            <h3 className='main-title'>內湖停車場</h3>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>114台北市內湖區金湖路46巷</p>
-            </div>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-map-pin"></i>
-              <div className='info'><span>200</span>公尺</div>
-            </div>
-            <div className='card-body p-0'>
-              <p>為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。</p>
-            </div>
-          </div>
-          <div className='card-footer d-flex'>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
-              <p className='info'>1</p>
-            </div>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
-              <p className='info'>10</p>
-            </div>
-          </div>
-        </div>
-        <div className='card'>
-          <div className='p-3'>
-            <h3 className='main-title'>內湖停車場</h3>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>114台北市內湖區金湖路46巷</p>
-            </div>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-map-pin"></i>
-              <div className='info'><span>200</span>公尺</div>
-            </div>
-            <div className='card-body p-0'>
-              <p>為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。</p>
-            </div>
-          </div>
-          <div className='card-footer d-flex'>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
-              <p className='info'>1</p>
-            </div>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
-              <p className='info'>10</p>
-            </div>
-          </div>
-        </div>
-        <div className='card'>
-          <div className='p-3'>
-            <h3 className='main-title'>內湖停車場</h3>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>114台北市內湖區金湖路46巷</p>
-            </div>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-map-pin"></i>
-              <div className='info'><span>200</span>公尺</div>
-            </div>
-            <div className='card-body p-0'>
-              <p>為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。</p>
-            </div>
-          </div>
-          <div className='card-footer d-flex'>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
-              <p className='info'>1</p>
-            </div>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
-              <p className='info'>10</p>
-            </div>
-          </div>
-        </div>
-        <div className='card'>
-          <div className='p-3'>
-            <h3 className='main-title'>內湖停車場</h3>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>114台北市內湖區金湖路46巷</p>
-            </div>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-map-pin"></i>
-              <div className='info'><span>200</span>公尺</div>
-            </div>
-            <div className='card-body p-0'>
-              <p>為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。為地下二層停車場，計有1998個小型車停車格，1337個機車停車位。</p>
-            </div>
-          </div>
-          <div className='card-footer d-flex'>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
-              <p className='info'>1</p>
-            </div>
-            <div className='info-group d-flex align-items-center'>
-              <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
-              <p className='info'>10</p>
-            </div>
-          </div>
-        </div>
+      <ParkingLotDetail park={target}/>
+      <div className='card-list pb-4'>
+        {parks.parks.map((park) => {
+            return(
+              <div className='card' key={park.id} onClick={openModal} id={park.id}>
+                <div className='p-3'>
+                  <h3 className='main-title'>{park.name}</h3>
+                  <div className='info-group d-flex align-items-center mb-1'>
+                    <i className="fa-solid fa-location-dot"></i>
+                    <p className='info'>{park.address}</p>
+                  </div>
+                  <div className='info-group d-flex align-items-center mb-1'>
+                    <i className="fa-solid fa-map-pin"></i>
+                    <div className='info'><span>{park.distance}</span>公里</div>
+                  </div>
+                  <div className='card-body p-0'>
+                    <p>{park.summary}</p>
+                  </div>
+                </div>
+                <div className='card-footer d-flex'>
+                  <div className='info-group d-flex align-items-center'>
+                    <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
+                    <p className='info'>{park.totalcar}</p>
+                  </div>
+                  <div className='info-group d-flex align-items-center'>
+                    <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
+                    <p className='info'>{park.totalmotor}</p>
+                  </div>
+                </div>
+              </div>
+            )
+          }
+        )}
       </div>
     </div>
 	)
@@ -198,14 +127,43 @@ const Element = ({ red, className }) => {
 
 
 const Navbar = styled(Element)`
-  box-shadow: rgb(0 0 0 / 25%) -4px 0px 12px 0px;
-  overflow-y: scroll;
-  max-height: 100vh;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 120px !important;
+  z-index: 999;
+  background: var(--dark-0);
+  transition: height 0.5s;
+
+  .card-list{
+    height: 100%;
+    overflow-y:scroll;
+    .card{
+      cursor: pointer;
+    }
+  }
+
+  &.toggle{
+    height: 100vh !important;
+    .toggle-up{
+      i{
+        transform: rotate3d(1,0,0,180deg);
+      }
+    }
+  }
+  
+  .toggle-up{
+    i{
+      font-size:20px;
+      cursor:pointer;
+      transition: transform 0.5s;
+    }
+  }
 
   i{color: var(--main-color)}
 
-  .card + .card{
-    margin-top: 20px;
+  .card{
+    margin-bottom: 20px;
   }
 
   .card-body{
@@ -238,6 +196,14 @@ const Navbar = styled(Element)`
       margin-left:10px;
     }
   }
+
+  @media(min-width:769px){
+    padding-top: 1.5rem;
+    position: relative;
+    box-shadow: rgb(0 0 0 / 25%) -4px 0px 12px 0px;
+    overflow: hidden;
+    height: 100vh !important;
+  }  
 `
 
 export default Navbar
