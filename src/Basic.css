@@ -52,7 +52,9 @@ p{
 .btn{
   max-width: 256px;
   height: 48px;
-  background-color: var(--main-color);
+  background-color: var(--main-color) !important;
+  padding-top:  0 !important;
+  padding-bottom: 0 !important;
 }
 
 .btn p {
