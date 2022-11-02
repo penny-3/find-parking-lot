@@ -1,5 +1,5 @@
 import React, {useState, Component} from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './Basic.css'
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import styled from "styled-components"
@@ -83,7 +83,7 @@ function Car(parks) {
   return (
     <main className='main-view'>
       <div className='row mx-0'>
-        <Navbar parks={parks}></Navbar>
+        <Navbar parks={parks} paramsId = {'car'}></Navbar>
         <MapCar></MapCar>
       </div>
     </main>
@@ -95,7 +95,7 @@ function Moto(parks) {
   return (
     <main className='main-view'>
       <div className='row mx-0'>
-        <Navbar parks={parks}></Navbar>
+        <Navbar parks={parks} paramsId = {'moto'}></Navbar>
         <MapMoto></MapMoto>
       </div>
     </main>
@@ -106,10 +106,9 @@ class App extends Component {
 
   constructor() {
     super()
-    // 待辦事項清單
     this.state = {
       data: [],
-      currentPos: [25.033671, 121.564427]
+      currentPos: [25.033671, 121.564427],
     }
   }
 
