@@ -1,11 +1,15 @@
 import React,{useState, useEffect} from 'react'
+import axios from 'axios'
 import styled from 'styled-components'
 import SearchFilter from './SearchFilter.js'
 import ParkingLotDetail from './ParkingLotDetail.js'
 import '../Basic.css'
+const targetURL_available = 'https://ga686.github.io/parking-api/avaliable_park.json'
 
 
-const Element = ({ className, parks }) => {
+const Element = ({ className, parks, paramsId }) => {
+  let currentParks = parks.parks
+  const [newParks,updateParks] = useState(currentParks)
   let empty = {
       "id" : "0",
       "area" : "",
@@ -76,10 +80,29 @@ const Element = ({ className, parks }) => {
   }
   const openModal = (e) => {
     document.querySelector('.modal').classList.add('show')
-    updateTarget(parks.parks.filter((park) => park.id === e.currentTarget.id)[0])
+    updateTarget(currentParks.filter((park) => park.id === e.currentTarget.id)[0])
   }
 
-  console.log(parks)
+  useEffect(() => {
+    const getAvailable = async () => {
+    const { data } = await axios(targetURL_available)
+        for(let i = 0; i < currentParks.length; i++){
+        data.data.park.map((park) => {
+        if(currentParks[i].id === park.id){
+          return currentParks[i] = {
+            ...currentParks[i],
+            availablecar: park.availablecar,
+            availablemotor: park.availablemotor
+          }      
+        }
+      })
+    }
+    updateParks(currentParks)
+    }
+
+    getAvailable()
+  },[currentParks]);
+
 
 	return (
 		<div className={className + ' col-md-4 h-100 pb-4 px-4 nav-wrap'}>
@@ -89,7 +112,7 @@ const Element = ({ className, parks }) => {
       <SearchFilter/>
       <ParkingLotDetail park={target}/>
       <div className='card-list pb-4'>
-        {parks.parks.map((park) => {
+        {newParks.map((park) => {
             return(
               <div className='card' key={park.id} onClick={openModal} id={park.id}>
                 <div className='p-3'>
@@ -108,12 +131,12 @@ const Element = ({ className, parks }) => {
                 </div>
                 <div className='card-footer d-flex'>
                   <div className='info-group d-flex align-items-center'>
-                    <div className='icon-wrap'><i className="fa-solid fa-car"></i></div>
-                    <p className='info'>{park.totalcar}</p>
+                    <div>全部車位：</div>
+                    <p className='info'>{paramsId === 'car' ? park.totalcar : park.totalmotor }</p>
                   </div>
                   <div className='info-group d-flex align-items-center'>
-                    <div className='icon-wrap'><i className="fa-solid fa-motorcycle"></i></div>
-                    <p className='info'>{park.totalmotor}</p>
+                    <div>剩餘車位：</div>
+                    <p className='info'>{(paramsId === 'car' ? park.availablecar : park.availablemotor) > 0 ? (paramsId === 'car' ? park.availablecar : park.availablemotor) : 0 }</p>
                   </div>
                 </div>
               </div>
@@ -185,10 +208,10 @@ const Navbar = styled(Element)`
       border: 1px solid var(--main-color);
       color: var(--main-color);
       text-align: center;
-
       i{line-height:40px}
     }
-    .info{margin-left:10px}
+    i{margin-right: 10px;}
+    p.info{display: contents;}
   }
 
   .card-footer{
