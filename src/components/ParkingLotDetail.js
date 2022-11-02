@@ -64,21 +64,21 @@ const Element = ({ className, park}) => {
               <p className='info'>{park.address}</p>
             </div>
             <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
+              <i className="fa-solid fa-phone"></i>
               <p className='info'>{park.tel}</p>
             </div>
             <p className='my-2'>{park.summary}</p>
             <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-location-dot"></i>
+              <i className="fa-solid fa-comment-dollar"></i>
               <p className='info'>{todayFare}<span>元/小時</span></p>
             </div>
             <div className='info-group d-flex align-items-center mb-1'>
               <p>剩餘車位：</p>
-              <p className='info'>1</p>
+              <p className='info'>{park.availablecar > 0 ? park.availablecar : 0}</p>
             </div>
             <div className='info-group d-flex align-items-center'>
               <p>剩餘機車位：</p>
-              <p className='info'>10</p>
+              <p className='info'>{park.availablemotor > 0 ? park.availablemotor : 0}</p>
             </div>
           </div>
           <div className="modal-footer justify-content-center">
