@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import MyMap from './MyMap.js'
+import MyMap from './MyMap'
 import '../Basic.css'
 
 
@@ -11,10 +11,8 @@ const Element = ({ red, className }) => {
 }
 
 
-const MapCar = styled(Element)`
+const MapMoto = styled(Element)`
   
 `
 
-export default MapCar
-
-
+export default MapMoto

@@ -1,8 +1,8 @@
 import React,{useState, useEffect} from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
-import SearchFilter from './SearchFilter.js'
-import ParkingLotDetail from './ParkingLotDetail.js'
+import SearchFilter from './SearchFilter'
+import ParkingLotDetail from './ParkingLotDetail'
 import '../Basic.css'
 const targetURL_available = 'https://ga686.github.io/parking-api/avaliable_park.json'
 
