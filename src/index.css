@@ -75,3 +75,6 @@ select,input {
   -webkit-appearance: none;
 }
 
+[default]{
+  color: rgb(156, 156, 156);
+}
