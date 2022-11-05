@@ -1,15 +1,15 @@
 import React,{useState, useEffect} from 'react'
-import axios from 'axios'
 import styled from 'styled-components'
 import SearchFilter from './SearchFilter'
 import ParkingLotDetail from './ParkingLotDetail'
+import {updateAva} from '../actions/mapActions'
+import store from '../store'
+import { connect } from 'react-redux'
 import '../Basic.css'
-const targetURL_available = 'https://ga686.github.io/parking-api/avaliable_park.json'
 
 
-const Element = ({ className, parks, paramsId }) => {
-  let currentParks = parks.parks
-  const [newParks,updateParks] = useState(currentParks)
+
+const Element = ({ className, parks, available, paramsId}) => {
   let empty = {
       "id" : "0",
       "area" : "",
@@ -74,35 +74,42 @@ const Element = ({ className, parks, paramsId }) => {
       }
   }
 
-  const [target,updateTarget] = useState(empty)
+  // useEffect(() => {
+  //   const getAvailable = async () => {
+  //   const { data } = await axios(targetURL_available)
+  //       for(let i = 0; i < currentParks.length; i++){
+  //       data.data.park.map((park) => {
+  //       if(currentParks[i].id === park.id){
+  //         return currentParks[i] = {
+  //           ...currentParks[i],
+  //           availablecar: park.availablecar,
+  //           availablemotor: park.availablemotor
+  //         }      
+  //       }
+  //     })
+  //   }
+  //   updateParks(currentParks)
+  //   }
+
+  //   getAvailable()
+  // },[currentParks]);
+
+  const [newParks,updateParks] = useState([])
+  const [target, updateTarget] = useState(empty)
+ 
+  useEffect(()=>{
+    if(parks)
+    updateParks(parks)
+    store.dispatch(updateAva(parks,available))
+  },[parks])
+
   const toggleUp = (e) => {
     document.querySelector('.nav-wrap').classList.toggle('toggle')
   }
   const openModal = (e) => {
     document.querySelector('.modal').classList.add('show')
-    updateTarget(currentParks.filter((park) => park.id === e.currentTarget.id)[0])
+    updateTarget(newParks.filter((park) => park.id === e.currentTarget.id)[0])
   }
-
-  useEffect(() => {
-    const getAvailable = async () => {
-    const { data } = await axios(targetURL_available)
-        for(let i = 0; i < currentParks.length; i++){
-        data.data.park.map((park) => {
-        if(currentParks[i].id === park.id){
-          return currentParks[i] = {
-            ...currentParks[i],
-            availablecar: park.availablecar,
-            availablemotor: park.availablemotor
-          }      
-        }
-      })
-    }
-    updateParks(currentParks)
-    }
-
-    getAvailable()
-  },[currentParks]);
-
 
 	return (
 		<div className={className + ' col-md-4 h-100 pb-4 px-4 nav-wrap'}>
@@ -228,6 +235,8 @@ const Navbar = styled(Element)`
     height: 100vh !important;
   }  
 `
+
+const mapStateToProps  = (state) => ({parks: state.parks})
 
 export default Navbar
 

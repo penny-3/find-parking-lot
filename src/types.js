@@ -1,0 +1,7 @@
+export const GET_PARKS = 'GET_PARKS'
+export const PARKS_ERROR = 'PARKS_ERROR'
+export const GET_AVA = 'GET_AVA'
+export const UPDATE_AVA = 'UPDATE_AVA'
+export const AVA_ERROR = 'AVA_ERROR'
+export const UPDATE_POS = 'UPDATE_POS'
+export const UPDATE_DIS = 'UPDATE_DIS'

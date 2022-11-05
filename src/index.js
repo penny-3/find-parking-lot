@@ -1,18 +1,23 @@
 import React, {StrictMode} from 'react'
 import ReactDOM from 'react-dom/client'
+import { HashRouter } from 'react-router-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
-import { BrowserRouter } from "react-router-dom"
 import 'leaflet/dist/leaflet.css'
+import store from './store'
+import {Provider} from 'react-redux';
 
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-<StrictMode>
-  <App />
-</StrictMode>
-);
+ ReactDOM.createRoot(document.getElementById('root')).render(
+   <StrictMode>
+     <HashRouter>
+       <Provider store={store}>
+        <App />
+      </Provider>
+     </HashRouter>
+   </StrictMode>
+ );
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
