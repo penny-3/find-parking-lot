@@ -6,7 +6,6 @@ import store from '../store'
 
 
 const Element = ({ className}) => {
-
   const[default_distance,updateDefault_distance] = useState(true)
   const[default_scope,updateDefault_scope] = useState(true)
 
@@ -27,18 +26,18 @@ const Element = ({ className}) => {
         <div className='filter flex-fill'>
           <select className='w-100' onChange={handleChangeScope} default = {default_scope}>
             <option default hidden>請選擇區域</option>
-            <option value={[25.05999101,121.5575876]}>松山區</option>
-            <option value={[25.03062083,121.5716697]}>信義區</option>
-            <option value={[25.02677012,121.5434446]}>大安區</option>
-            <option value={[25.0696991,121.5381597]}>中山區</option>
-            <option value={[25.03240487,121.5198839]}>中正區</option>
-            <option value={[25.06342433,121.5130417]}>大同區</option>
-            <option value={[25.0285899,121.4979858]}>萬華區</option>
-            <option value={[24.98857934,121.5736082]}>文山區</option>
-            <option value={[25.03600934,121.6097573]}>南港區</option>
-            <option value={[25.08370623,121.5923828]}>內湖區</option>
-            <option value={[25.12546704,121.5508473]}>士林區</option>
-            <option value={[25.1480682,121.5177992]}>北投區</option>
+            <option value={['25.05999101','121.5575876']}>松山區</option>
+            <option value={['25.03062083','121.5716697']}>信義區</option>
+            <option value={['25.02677012','121.5434446']}>大安區</option>
+            <option value={['25.0696991','121.5381597']}>中山區</option>
+            <option value={['25.03240487','121.5198839']}>中正區</option>
+            <option value={['25.06342433','121.5130417']}>大同區</option>
+            <option value={['25.0285899','121.4979858']}>萬華區</option>
+            <option value={['24.98857934','121.5736082']}>文山區</option>
+            <option value={['25.03600934','121.6097573']}>南港區</option>
+            <option value={['25.08370623','121.5923828']}>內湖區</option>
+            <option value={['25.12546704','121.5508473']}>士林區</option>
+            <option value={['25.1480682','121.5177992']}>北投區</option>
           </select>
           <i className="fa-sharp fa-solid fa-caret-down"></i>
         </div>
