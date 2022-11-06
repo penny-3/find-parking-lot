@@ -6,30 +6,27 @@ import './Basic.css'
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
 import Swal from 'sweetalert2'
 import Navbar from "./components/Navbar"
-import MapMoto from './components/MapMoto'
-import MapCar from './components/MapCar'
+import MyMap from './components/MyMap'
 
 
 function Car(props) {
-  console.log(props)
-
   return (
     <main className='main-view'>
       <div className='row mx-0'>
         <Navbar parks={props.parks} paramsId = {'car'} available={props.available}></Navbar>
-        <MapCar></MapCar>
+        <MyMap paramsId = {'car'}></MyMap>
       </div>
     </main>
   );
 }
 
-function Moto(parks) {
+function Moto(props) {
 
   return (
     <main className='main-view'>
       <div className='row mx-0'>
-        <Navbar parks={parks} paramsId = {'moto'}></Navbar>
-        <MapMoto></MapMoto>
+        <Navbar parks={props.parks} paramsId = {'moto'} available={props.available}></Navbar>
+        <MyMap paramsId = {'moto'}></MyMap>
       </div>
     </main>
   );
@@ -38,7 +35,6 @@ function Moto(parks) {
 class App extends Component {
 
   componentDidMount(){  
-    console.log(this.props)
     this.props.getParks()
     this.props.getAvailable()
   }
