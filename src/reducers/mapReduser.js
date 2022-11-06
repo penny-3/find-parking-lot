@@ -3,7 +3,7 @@ import {GET_PARKS,UPDATE_DIS,UPDATE_POS,UPDATE_AVA} from '../types'
 const initialState = {
     parks:[],
     currentPos: [25.033671, 121.564427],
-    distance: 1,
+    distance: 0.3,
     loading:true,
     avaliable: []
 }
@@ -84,9 +84,8 @@ function getCurrentPos(position) {
 }
 
 function getCurrentDis(distance) {
-    console.log(distance)
     if(!distance){
-        return 1
+        return 0.3
     }
     return distance
 }
@@ -132,13 +131,6 @@ export default function(state = initialState, action){
             ...state,
             distance: action.payload,
         }
-        case UPDATE_AVA:
-            return {
-            ...state,
-            ...action.payload
-        }
-
-
 
         default: return state
     }
