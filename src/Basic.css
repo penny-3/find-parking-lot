@@ -1,5 +1,6 @@
 :root{
   --main-color: #307A59;
+  --alert-color: #F2594B;
   --secondary-color: #ACCABD;
   --dark-100: #171725;
   --dark-90: #44444F;
@@ -73,3 +74,5 @@ p{
 
 /* Map */
 .leaflet-marker-icon{object-fit: contain;}
+
+.leaflet-marker-icon:first-child{ filter: hue-rotate(120deg); }
