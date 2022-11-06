@@ -2,7 +2,7 @@ import React,{useState, useEffect} from 'react'
 import styled from 'styled-components'
 import SearchFilter from './SearchFilter'
 import ParkingLotDetail from './ParkingLotDetail'
-import {updateAva} from '../actions/mapActions'
+import {updateAva, updatePosition} from '../actions/mapActions'
 import store from '../store'
 import '../Basic.css'
 
@@ -89,6 +89,14 @@ const Element = ({ className, parks, available, paramsId}) => {
     updateTarget(newParks.filter((park) => park.id === e.currentTarget.id)[0])
   }
 
+  const updateCurrentPosbyCard = (e) => {
+    console.log(e.currentTarget.id)
+    const target = newParks.filter(park => park.id === e.currentTarget.id)
+    const latlng = target[0].lat + ',' + target[0].lng
+    store.dispatch(updatePosition(latlng))
+    openModal(e)
+  } 
+
 	return (
 		<div className={className + ' col-md-4 h-100 pb-4 px-4 nav-wrap'}>
       <div className='d-md-none text-center pb-1 pt-2 toggle-up'>
@@ -99,7 +107,7 @@ const Element = ({ className, parks, available, paramsId}) => {
       <div className='card-list pb-4'>
         {newParks.map((park) => {
             return(
-              <div className='card' key={park.id} onClick={openModal} id={park.id}>
+              <div className='card' key={park.id} id={park.id} onClick={updateCurrentPosbyCard}  >
                 <div className='p-3'>
                   <h3 className='main-title'>{park.name}</h3>
                   <div className='info-group d-flex align-items-center mb-1'>
