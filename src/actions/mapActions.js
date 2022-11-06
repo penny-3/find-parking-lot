@@ -41,7 +41,6 @@ const getAvailable = () => async dispatch => {
 const updatePosition = (position) => {
     let newPos = []
     newPos.push(position.split(','))
-    console.log(newPos)
     return {
 		type: UPDATE_POS,
 		payload: newPos[0]
