@@ -4,7 +4,6 @@ import SearchFilter from './SearchFilter'
 import ParkingLotDetail from './ParkingLotDetail'
 import {updateAva} from '../actions/mapActions'
 import store from '../store'
-import { connect } from 'react-redux'
 import '../Basic.css'
 
 
@@ -73,27 +72,6 @@ const Element = ({ className, parks, available, paramsId}) => {
         } ]
       }
   }
-
-  // useEffect(() => {
-  //   const getAvailable = async () => {
-  //   const { data } = await axios(targetURL_available)
-  //       for(let i = 0; i < currentParks.length; i++){
-  //       data.data.park.map((park) => {
-  //       if(currentParks[i].id === park.id){
-  //         return currentParks[i] = {
-  //           ...currentParks[i],
-  //           availablecar: park.availablecar,
-  //           availablemotor: park.availablemotor
-  //         }      
-  //       }
-  //     })
-  //   }
-  //   updateParks(currentParks)
-  //   }
-
-  //   getAvailable()
-  // },[currentParks]);
-
   const [newParks,updateParks] = useState([])
   const [target, updateTarget] = useState(empty)
  
@@ -126,7 +104,7 @@ const Element = ({ className, parks, available, paramsId}) => {
                   <h3 className='main-title'>{park.name}</h3>
                   <div className='info-group d-flex align-items-center mb-1'>
                     <i className="fa-solid fa-location-dot"></i>
-                    <p className='info'>{park.address}</p>
+                    <p className='info'>{park.address.length > 0 ? park.address : '台北市'}</p>
                   </div>
                   <div className='info-group d-flex align-items-center mb-1'>
                     <i className="fa-solid fa-map-pin"></i>
@@ -138,11 +116,11 @@ const Element = ({ className, parks, available, paramsId}) => {
                 </div>
                 <div className='card-footer d-flex'>
                   <div className='info-group d-flex align-items-center'>
-                    <div>全部車位：</div>
+                    <div>{paramsId === 'car'?'全部車位：': '全部機車位：'}</div>
                     <p className='info'>{paramsId === 'car' ? park.totalcar : park.totalmotor }</p>
                   </div>
                   <div className='info-group d-flex align-items-center'>
-                    <div>剩餘車位：</div>
+                    <div>{paramsId === 'car'?'剩餘車位:':'剩餘機車位：'}</div>
                     <p className='info'>{(paramsId === 'car' ? park.availablecar : park.availablemotor) > 0 ? (paramsId === 'car' ? park.availablecar : park.availablemotor) : 0 }</p>
                   </div>
                 </div>
@@ -150,6 +128,7 @@ const Element = ({ className, parks, available, paramsId}) => {
             )
           }
         )}
+        <h2 className='unfound' hidden = {newParks.length > 0 ? true : false}>Oops! 查詢不到停車場<br/>╮(╯_╰)╭</h2>
       </div>
     </div>
 	)
@@ -227,6 +206,12 @@ const Navbar = styled(Element)`
     }
   }
 
+  .unfound{
+    color: var(--secondary-color);
+    text-align: center;
+    line-height: 2;
+  }
+
   @media(min-width:769px){
     padding-top: 1.5rem;
     position: relative;
@@ -235,9 +220,6 @@ const Navbar = styled(Element)`
     height: 100vh !important;
   }  
 `
-
-const mapStateToProps  = (state) => ({parks: state.parks})
-
 export default Navbar
 
 
