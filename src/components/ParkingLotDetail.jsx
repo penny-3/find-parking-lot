@@ -1,6 +1,8 @@
 import React, {useEffect,useState} from 'react'
 import styled from 'styled-components'
 import '../Basic.css'
+import { Link } from 'react-router-dom'
+import store from '../store'
 
 
 const Element = ({ className, park}) => {
@@ -14,6 +16,8 @@ const Element = ({ className, park}) => {
   const isBetween = (testNumber, lowerLimit, upperLimit) => {
     return testNumber >= lowerLimit && testNumber <= upperLimit
   }
+
+  const google_url = 'https://www.google.com/maps/search/?api=1&map_action=map&zoom=16&query='
 
   let today = []
 
@@ -61,7 +65,7 @@ const Element = ({ className, park}) => {
           <div className="modal-body">
             <div className='info-group d-flex align-items-center mb-1'>
               <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>{park.address}</p>
+              <p className='info'>{park.address.length > 0 ? park.address : '台北市'}</p>
             </div>
             <div className='info-group d-flex align-items-center mb-1'>
               <i className="fa-solid fa-phone"></i>
@@ -82,7 +86,7 @@ const Element = ({ className, park}) => {
             </div>
           </div>
           <div className="modal-footer justify-content-center">
-            <div className='btn'><p>導航位置</p></div>
+            <div className='btn'><a href={google_url+ store.getState().all.currentPos}><p>導航位置</p></a></div>
           </div>
         </div>
       </div>
