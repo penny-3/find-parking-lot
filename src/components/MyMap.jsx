@@ -15,10 +15,40 @@ import { Link } from 'react-router-dom'
 let DefaultIcon = L.icon({
     iconUrl: icon,
     shadowUrl: iconShadow,
-    iconSize: [30,30]
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
 });
 
 L.Marker.prototype.options.icon = DefaultIcon
+
+const greenIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+})
+
+const orangeIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+})
+
+const greyIcon = new L.Icon({
+    iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+})
 
 const Element = ({ className , paramsId}) => {
     const newState = store.getState()
@@ -63,9 +93,42 @@ const Element = ({ className , paramsId}) => {
       store.dispatch(updatePosition(latlng))
       store.dispatch(getParks())
     }
+
     function error() {
       console.log('not support')
     }
+
+    function sortMarker(paramsId,availablecar,availablemotor){
+       let icon = greyIcon
+      if(paramsId === 'car' && availablecar){
+        if(availablecar > 10){
+          icon = greenIcon
+          return icon
+        }else if( 10 > availablecar && availablecar > 0){
+          icon = orangeIcon
+          return icon
+        }
+      }
+      if(paramsId === 'moto' && availablemotor){
+        if(availablemotor > 10){
+          icon = greenIcon
+          return icon
+        }else if( 10 > availablemotor && availablemotor > 0){
+          icon = orangeIcon
+          return icon
+        }
+      }
+      return icon
+    }
+
+    const changeMarkerOnClick = (e) => {
+      document.querySelectorAll('.leaflet-marker-icon').forEach((item,idx) => {
+        item.classList.remove('active')
+      })
+      e.target._icon.classList.add("active")
+    }
+
+    const google_url = 'https://www.google.com/maps/search/?api=1&map_action=map&zoom=16&query='
 
     return (
       <div className={className + ' col-md-8'} >
@@ -75,23 +138,27 @@ const Element = ({ className , paramsId}) => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <Control prepend position='topright'>
-          <div className="map-btn link" data-active = {paramsId === 'car' ? true : false}><Link to="/car"><i className="fa-solid fa-car"></i></Link></div>
+          <div className="map-btn link" hidden = {paramsId === 'car' ? true : false}><Link to="/car"><i className="fa-solid fa-car"></i></Link></div>
         </Control>
         <Control prepend position='topright'>
-          <div className="map-btn link" data-active = {paramsId === 'moto' ? true : false}><Link to="/moto"><i className="fa-solid fa-motorcycle"></i></Link></div>
+          <div className="map-btn link" hidden = {paramsId === 'moto' ? true : false}><Link to="/moto"><i className="fa-solid fa-motorcycle"></i></Link></div>
         </Control>
         <Control prepend position='topright'>
           <div className="map-btn" onClick={UpdateCurrentPos}><i className="fa-solid fa-location-crosshairs"></i></div>
         </Control>
         <Recenter lat={Number(getPos[0])} lng={Number(getPos[1])} />
         <Circle center={[Number(getPos[0]), Number(getPos[1])]} pathOptions={fillBlueOptions} radius={getDis*1000} />
-        <Marker position={[Number(getPos[0]), Number(getPos[1])]} >
+        <Marker position={[Number(getPos[0]), Number(getPos[1])]}>
           <Popup>目前位置</Popup>
         </Marker>
         {getParksNow.map((park) => {
-            return (<Marker position={[park.lat,park.lng]} key={park.id} >
+            return (<Marker position={[park.lat,park.lng]} key={park.id} icon = {sortMarker(paramsId,park.availablecar,park.availablemotor)} eventHandlers={{click: changeMarkerOnClick,}}>
                <Popup>
-                   {park.name}
+                   <h5 className="text-center">{park.name}</h5>
+                    <p className="text-center mt-0 mb-3">剩餘車位：{ paramsId === 'car' ? park.availablecar | 0 : park.availablemotor | 0}</p>
+                    <div className="text-center">
+                      <a href={google_url+park.lat+','+park.lng}>帶我去</a>
+                    </div>
                  </Popup>
                </Marker>)     
           })}
@@ -118,11 +185,9 @@ const MyMap = styled(Element)`
     }
   }
 
-  .map-btn.link{
-    background: var(--dark-60);
-    &[data-active = "true"]{
-      background: var(--alert-color);
-    }
+  .leaflet-marker-icon.active{
+    width: 35px !important; 
+    height: 51px !important;
   }
 
 `
