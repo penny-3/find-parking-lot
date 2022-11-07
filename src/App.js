@@ -12,20 +12,19 @@ function Car(props) {
   return (
     <main className='main-view'>
       <div className='row mx-0'>
-        <Navbar parks={props.parks} paramsId = {'car'} available={props.available}></Navbar>
-        <MyMap paramsId = {'car'}></MyMap>
+        <Navbar parks={props.parks} paramsId = {'car'} available={props.available} loading={props.loading}></Navbar>
+        <MyMap paramsId = {'car'} loading={props.loading}></MyMap>
       </div>
     </main>
   );
 }
 
 function Moto(props) {
-
   return (
     <main className='main-view'>
       <div className='row mx-0'>
-        <Navbar parks={props.parks} paramsId = {'moto'} available={props.available}></Navbar>
-        <MyMap paramsId = {'moto'}></MyMap>
+        <Navbar parks={props.parks} paramsId = {'moto'} available={props.available} loading={props.loading}></Navbar>
+        <MyMap paramsId = {'moto'} loading={props.loading}></MyMap>
       </div>
     </main>
   );

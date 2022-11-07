@@ -10,6 +10,7 @@ import { updatePosition , getParks} from '../actions/mapActions'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
+import LoadingSpinner from './LoadingSpinner'
 
 
 let DefaultIcon = L.icon({
@@ -50,7 +51,7 @@ const greyIcon = new L.Icon({
     shadowSize: [41, 41]
 })
 
-const Element = ({ className , paramsId}) => {
+const Element = ({ className , paramsId, loading}) => {
     const newState = store.getState()
     const [getParksNow , updateParks] = useState([])
     const [getPos, updatePos] = useState([25.033671, 121.564427])
@@ -134,42 +135,45 @@ const Element = ({ className , paramsId}) => {
     const google_url = 'https://www.google.com/maps/search/?api=1&map_action=map&zoom=16&query='
 
     return (
-      <div className={className + ' col-md-8'} >
-        <MapContainer center={[25.033671, 121.564427]} zoom={17} style={{height: '100vh'}} >
-        <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        />
-        <Control prepend position='topright'>
-          <div className="map-btn link" hidden = {paramsId === 'car' ? true : false}><Link to="/car"><i className="fa-solid fa-car"></i></Link></div>
-        </Control>
-        <Control prepend position='topright'>
-          <div className="map-btn link" hidden = {paramsId === 'moto' ? true : false}><Link to="/moto"><i className="fa-solid fa-motorcycle"></i></Link></div>
-        </Control>
-        <Control prepend position='topright'>
-          <div className="map-btn" onClick={UpdateCurrentPos}><i className="fa-solid fa-location-crosshairs"></i></div>
-        </Control>
-        <Control prepend position='bottomleft'>
-          <div className="current-position-tip d-flex align-items-center"><i className="fa-solid fa-location-crosshairs"></i><p>目前位置：{getPos[0]}, {getPos[1]}</p></div>
-        </Control>
-        <Recenter lat={Number(getPos[0])} lng={Number(getPos[1])} />
-        <Circle center={[Number(getPos[0]), Number(getPos[1])]} pathOptions={fillBlueOptions} radius={getDis*1000} />
-        <Marker position={[Number(getPos[0]), Number(getPos[1])]}>
-          <Popup>目前位置</Popup>
-        </Marker>
-        {getParksNow.map((park) => {
-            return (<Marker position={[park.lat,park.lng]} key={park.id} icon = {sortMarker(paramsId,park.availablecar,park.availablemotor)} eventHandlers={{click: changeMarkerOnClick,}}>
-               <Popup>
-                   <h5 className="text-center">{park.name}</h5>
-                    <p className="text-center mt-0 mb-3" hidden = {paramsId !== 'car' ? true : false}>剩餘車位：{ park.availablecar > 0 ? park.availablecar : 0}</p>
-                    <p className="text-center mt-0 mb-3" hidden = {paramsId !== 'moto' ? true : false}>剩餘機車位：{ park.availablemotor > 0 ? park.availablemotor : 0}</p>
-                    <div className="text-center">
-                      <a href={google_url+park.lat+','+park.lng}>在 google map 上查看</a>
-                    </div>
-                 </Popup>
-               </Marker>)     
-          })}
-      </MapContainer>
+      <div className={className + ' col-md-8'}>
+        <LoadingSpinner hidden={loading}></LoadingSpinner>
+        <div hidden={loading}>
+          <MapContainer center={[25.033671, 121.564427]} zoom={17} style={{height: '100vh'}} >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Control prepend position='topright'>
+            <div className="map-btn link" hidden = {paramsId === 'car' ? true : false}><Link to="/car"><i className="fa-solid fa-car"></i></Link></div>
+          </Control>
+          <Control prepend position='topright'>
+            <div className="map-btn link" hidden = {paramsId === 'moto' ? true : false}><Link to="/moto"><i className="fa-solid fa-motorcycle"></i></Link></div>
+          </Control>
+          <Control prepend position='topright'>
+            <div className="map-btn" onClick={UpdateCurrentPos}><i className="fa-solid fa-location-crosshairs"></i></div>
+          </Control>
+          <Control prepend position='bottomleft'>
+            <div className="current-position-tip d-flex align-items-center"><i className="fa-solid fa-location-crosshairs"></i><p>目前位置：{getPos[0]}, {getPos[1]}</p></div>
+          </Control>
+          <Recenter lat={Number(getPos[0])} lng={Number(getPos[1])} />
+          <Circle center={[Number(getPos[0]), Number(getPos[1])]} pathOptions={fillBlueOptions} radius={getDis*1000} />
+          <Marker position={[Number(getPos[0]), Number(getPos[1])]}>
+            <Popup>目前位置</Popup>
+          </Marker>
+          {getParksNow.map((park) => {
+              return (<Marker position={[park.lat,park.lng]} key={park.id} icon = {sortMarker(paramsId,park.availablecar,park.availablemotor)} eventHandlers={{click: changeMarkerOnClick,}}>
+                <Popup>
+                    <h5 className="text-center">{park.name}</h5>
+                      <p className="text-center mt-0 mb-3" hidden = {paramsId !== 'car' ? true : false}>剩餘車位：{ park.availablecar > 0 ? park.availablecar : 0}</p>
+                      <p className="text-center mt-0 mb-3" hidden = {paramsId !== 'moto' ? true : false}>剩餘機車位：{ park.availablemotor > 0 ? park.availablemotor : 0}</p>
+                      <div className="text-center">
+                        <a href={google_url+park.lat+','+park.lng}>在 google map 上查看</a>
+                      </div>
+                  </Popup>
+                </Marker>)     
+            })}
+          </MapContainer>
+        </div>
       </div>
     )
 }

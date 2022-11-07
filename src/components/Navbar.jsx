@@ -8,7 +8,7 @@ import '../Basic.css'
 
 
 
-const Element = ({ className, parks, available, paramsId}) => {
+const Element = ({ className, parks, available, paramsId, loading}) => {
   let empty = {
       "id" : "0",
       "area" : "",
@@ -98,44 +98,47 @@ const Element = ({ className, parks, available, paramsId}) => {
 
 	return (
 		<div className={className + ' col-md-4 h-100 pb-4 px-4 nav-wrap'}>
-      <div className='d-md-none text-center pb-1 pt-2 toggle-up'>
-        <i className="fa-solid fa-angle-up" onClick={toggleUp}></i>
-      </div>
-      <SearchFilter/>
-      <ParkingLotDetail park={target}/>
-      <div className='card-list pb-4'>
-        {newParks.map((park) => {
-            return(
-              <div className='card' key={park.id} id={park.id} onClick={updateCurrentPosbyCard}  >
-                <div className='p-3'>
-                  <h3 className='main-title'>{park.name}</h3>
-                  <div className='info-group d-flex align-items-center mb-1'>
-                    <i className="fa-solid fa-location-dot"></i>
-                    <p className='info'>{park.address.length > 0 ? park.address : '台北市'}</p>
+      <h2 className='unfound' hidden = {!loading}>搜尋中請稍候...</h2>
+      <div hidden={loading}>
+        <div className='d-md-none text-center pb-1 pt-2 toggle-up'>
+          <i className="fa-solid fa-angle-up" onClick={toggleUp}></i>
+        </div>
+        <SearchFilter/>
+        <ParkingLotDetail park={target}/>
+        <div className='card-list pb-4'>
+          {newParks.map((park) => {
+              return(
+                <div className='card' key={park.id} id={park.id} onClick={updateCurrentPosbyCard}  >
+                  <div className='p-3'>
+                    <h3 className='main-title'>{park.name}</h3>
+                    <div className='info-group d-flex align-items-center mb-1'>
+                      <i className="fa-solid fa-location-dot"></i>
+                      <p className='info'>{park.address.length > 0 ? park.address : '台北市'}</p>
+                    </div>
+                    <div className='info-group d-flex align-items-center mb-1'>
+                      <i className="fa-solid fa-map-pin"></i>
+                      <div className='info'><span>{park.distance}</span>公里</div>
+                    </div>
+                    <div className='card-body p-0'>
+                      <p>{park.summary}</p>
+                    </div>
                   </div>
-                  <div className='info-group d-flex align-items-center mb-1'>
-                    <i className="fa-solid fa-map-pin"></i>
-                    <div className='info'><span>{park.distance}</span>公里</div>
-                  </div>
-                  <div className='card-body p-0'>
-                    <p>{park.summary}</p>
+                  <div className='card-footer d-flex'>
+                    <div className='info-group d-flex align-items-center'>
+                      <div>{paramsId === 'car'?'全部車位：': '全部機車位：'}</div>
+                      <p className='info'>{paramsId === 'car' ? park.totalcar : park.totalmotor }</p>
+                    </div>
+                    <div className='info-group d-flex align-items-center'>
+                      <div>{paramsId === 'car'?'剩餘車位：':'剩餘機車位：'}</div>
+                      <p className='info'>{(paramsId === 'car' ? park.availablecar : park.availablemotor) > 0 ? (paramsId === 'car' ? park.availablecar : park.availablemotor) : 0 }</p>
+                    </div>
                   </div>
                 </div>
-                <div className='card-footer d-flex'>
-                  <div className='info-group d-flex align-items-center'>
-                    <div>{paramsId === 'car'?'全部車位：': '全部機車位：'}</div>
-                    <p className='info'>{paramsId === 'car' ? park.totalcar : park.totalmotor }</p>
-                  </div>
-                  <div className='info-group d-flex align-items-center'>
-                    <div>{paramsId === 'car'?'剩餘車位：':'剩餘機車位：'}</div>
-                    <p className='info'>{(paramsId === 'car' ? park.availablecar : park.availablemotor) > 0 ? (paramsId === 'car' ? park.availablecar : park.availablemotor) : 0 }</p>
-                  </div>
-                </div>
-              </div>
-            )
-          }
-        )}
-        <h2 className='unfound' hidden = {newParks.length > 0 ? true : false}>Oops! 查詢不到停車場<br/>╮(╯_╰)╭</h2>
+              )
+            }
+          )}
+          <h2 className='unfound' hidden = {newParks.length > 0 ? true : false}>Oops! 查詢不到停車場<br/>╮(╯_╰)╭</h2>
+        </div>
       </div>
     </div>
 	)
