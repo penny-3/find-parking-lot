@@ -32,7 +32,7 @@ const Element = ({ className, park}) => {
         }
       }
       getFee()
-    },[park,workingday,holiday])
+    },[])
 
 	return (
     <div className={ className + " modal"} tabIndex="-1" role="dialog">
@@ -47,11 +47,11 @@ const Element = ({ className, park}) => {
           <div className="modal-body">
             <div className='info-group align-items-center mb-1'>
               <i className="fa-solid fa-location-dot"></i>
-              <p className='info'>{park.address.length > 0 ? park.address : '台北市'}</p>
+              <p className='info detail'>{park.address.length > 0 ? park.address : '台北市'}</p>
             </div>
             <div className='info-group align-items-center mb-1'>
               <i className="fa-solid fa-phone"></i>
-              <p className='info'>{park.tel}</p>
+              <p className='info detail'>{park.tel}</p>
             </div>
             <hr></hr>
             <p className='my-2'>{park.summary}</p>   
@@ -65,11 +65,11 @@ const Element = ({ className, park}) => {
             </div>
             <div className='info-group align-items-center mb-1'>
               <p><i className="fa-solid fa-car"></i> 剩餘車位：</p>
-              <p className='info'>{park.availablecar > 0 ? park.availablecar : 0}</p>
+              <p className='info detail'>{park.availablecar > 0 ? park.availablecar : 0}</p>
             </div>
             <div className='info-group align-items-center'>
               <p><i className="fa-solid fa-motorcycle"></i> 剩餘機車位：</p>
-              <p className='info'>{park.availablemotor > 0 ? park.availablemotor : 0}</p>
+              <p className='info detail'>{park.availablemotor > 0 ? park.availablemotor : 0}</p>
             </div>
           </div>
           <div className="modal-footer justify-content-center">
@@ -113,8 +113,13 @@ const ParkingLotDetail = styled(Element)`
       span{margin-left: 10px;}
     }
     &.fare-wrap{
-      background: #D0E8D1;
+      background: var(--light-green);
       border-radius: 10px;
+    }
+    .info.detail{
+      display: block;
+      overflow: unset;
+      -webkit-line-clamp: unset;
     }
   }
 

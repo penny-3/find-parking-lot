@@ -90,7 +90,6 @@ const Element = ({ className, parks, available, paramsId}) => {
   }
 
   const updateCurrentPosbyCard = (e) => {
-    console.log(e.currentTarget.id)
     const target = newParks.filter(park => park.id === e.currentTarget.id)
     const latlng = target[0].lat + ',' + target[0].lng
     store.dispatch(updatePosition(latlng))
