@@ -149,6 +149,9 @@ const Element = ({ className , paramsId}) => {
         <Control prepend position='topright'>
           <div className="map-btn" onClick={UpdateCurrentPos}><i className="fa-solid fa-location-crosshairs"></i></div>
         </Control>
+        <Control prepend position='bottomleft'>
+          <div className="current-position-tip d-flex align-items-center"><i className="fa-solid fa-location-crosshairs"></i><p>目前位置：{getPos[0]}, {getPos[1]}</p></div>
+        </Control>
         <Recenter lat={Number(getPos[0])} lng={Number(getPos[1])} />
         <Circle center={[Number(getPos[0]), Number(getPos[1])]} pathOptions={fillBlueOptions} radius={getDis*1000} />
         <Marker position={[Number(getPos[0]), Number(getPos[1])]}>
@@ -158,7 +161,8 @@ const Element = ({ className , paramsId}) => {
             return (<Marker position={[park.lat,park.lng]} key={park.id} icon = {sortMarker(paramsId,park.availablecar,park.availablemotor)} eventHandlers={{click: changeMarkerOnClick,}}>
                <Popup>
                    <h5 className="text-center">{park.name}</h5>
-                    <p className="text-center mt-0 mb-3">剩餘車位：{ paramsId === 'car' ? park.availablecar | 0 : park.availablemotor | 0}</p>
+                    <p className="text-center mt-0 mb-3" hidden = {paramsId !== 'car' ? true : false}>剩餘車位：{ park.availablecar > 0 ? park.availablecar : 0}</p>
+                    <p className="text-center mt-0 mb-3" hidden = {paramsId !== 'moto' ? true : false}>剩餘機車位：{ park.availablemotor > 0 ? park.availablemotor : 0}</p>
                     <div className="text-center">
                       <a href={google_url+park.lat+','+park.lng}>在 google map 上查看</a>
                     </div>
@@ -193,6 +197,15 @@ const MyMap = styled(Element)`
     height: 51px !important;
   }
 
+  .current-position-tip{
+    background: var(--main-color);
+    color: #fff;
+    border-radius: 30px;
+    height: 30px;
+    min-width: 300px;
+    padding: 5px 10px;
+    i{margin-right: 10px;}
+  }
 `
 
 const mapStateToProps  = (state) => ({parks:state.parks, position: state.position})
