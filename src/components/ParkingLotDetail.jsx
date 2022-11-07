@@ -6,50 +6,33 @@ import store from '../store'
 
 const Element = ({ className, park}) => {
 
-  const [todayFare, updateFare] = useState(0)
+  const [workingday, updateWorkingday] = useState([])
+  const [holiday, updateHoliday] = useState([])
 
   const closeModal = (e) => {
     document.querySelector('.modal').classList.remove('show')
   }
 
-  const isBetween = (testNumber, lowerLimit, upperLimit) => {
-    return testNumber >= lowerLimit && testNumber <= upperLimit
-  }
-
   const google_url = 'https://www.google.com/maps/search/?api=1&map_action=map&zoom=16&query='
 
-  let today = []
-
-
     useEffect(() => {
-      getCurrentTime()
       const getFee = () => {
-        console.log(park.FareInfo)
-        if(park.FareInfo.length > 0)
-        return updateFare(park.FareInfo[today[0]][today[1]].Fare)
+
+        updateWorkingday([])
+        updateHoliday([])
+
+        if(park.FareInfo.length === 0 | park.FareInfo === undefined)
+        return
+
+        if(park.FareInfo.WorkingDay){
+          updateWorkingday(park.FareInfo.WorkingDay)
+        }
+        if(park.FareInfo.Holiday){
+          updateHoliday(park.FareInfo.Holiday)
+        }
       }
       getFee()
-    },[park])
-
-  const getCurrentTime = () => {
-    const d = new Date()
-    let hour = d.getHours()
-    let day = d.getDay()
-    if (isBetween(day,1,5)&& isBetween(hour,0,9)){
-      today = ['WorkingDay',0]
-    }else if(isBetween(day,1,5)&& isBetween(hour,10,18)){
-      today = ['WorkingDay',1]
-    }else if(isBetween(day,1,5)&& isBetween(hour,19,24)){
-      today = ['WorkingDay',2]
-    }else if(isBetween(day,6,7)&& isBetween(hour,0,9)){
-      today = ['Holiday',0]
-    }else if(isBetween(day,6,7)&& isBetween(hour,10,18)){
-      today = ['Holiday',1]
-    }else if(isBetween(day,6,7)&& isBetween(hour,19,24)){
-      today = ['Holiday',2]
-    }
-    return today
-  }
+    },[park,workingday,holiday])
 
 	return (
     <div className={ className + " modal"} tabIndex="-1" role="dialog">
@@ -62,25 +45,30 @@ const Element = ({ className, park}) => {
             </button>
           </div>
           <div className="modal-body">
-            <div className='info-group d-flex align-items-center mb-1'>
+            <div className='info-group align-items-center mb-1'>
               <i className="fa-solid fa-location-dot"></i>
               <p className='info'>{park.address.length > 0 ? park.address : '台北市'}</p>
             </div>
-            <div className='info-group d-flex align-items-center mb-1'>
+            <div className='info-group align-items-center mb-1'>
               <i className="fa-solid fa-phone"></i>
               <p className='info'>{park.tel}</p>
             </div>
-            <p className='my-2'>{park.summary}</p>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <i className="fa-solid fa-comment-dollar"></i>
-              <p className='info'>{todayFare}<span>元/小時</span></p>
+            <hr></hr>
+            <p className='my-2'>{park.summary}</p>   
+            <div className='info-group align-items-baseline my-3 fare-wrap' hidden = {workingday.length <= 0 && holiday.length <= 0 ? true : false}>
+              <i className="fa-solid fa-comment-dollar px-3"></i>
+              <div className='fare py-2'>
+                {workingday.map((day, index )=> (<p key={index} className='info d-block'> {'平日 ' + day.Period }<span className='d-inline-block'>{ day.Fare + ' /小時'}</span></p>))}
+                <hr className='my-2'></hr>
+                {holiday.map((day, index) => (<p key={index} className='info d-block'> {'假日 ' + day.Period }<span className='d-inline-block'>{ day.Fare + ' /小時'}</span></p>))}
+              </div>
             </div>
-            <div className='info-group d-flex align-items-center mb-1'>
-              <p>剩餘車位：</p>
+            <div className='info-group align-items-center mb-1'>
+              <p><i className="fa-solid fa-car"></i> 剩餘車位：</p>
               <p className='info'>{park.availablecar > 0 ? park.availablecar : 0}</p>
             </div>
-            <div className='info-group d-flex align-items-center'>
-              <p>剩餘機車位：</p>
+            <div className='info-group align-items-center'>
+              <p><i className="fa-solid fa-motorcycle"></i> 剩餘機車位：</p>
               <p className='info'>{park.availablemotor > 0 ? park.availablemotor : 0}</p>
             </div>
           </div>
@@ -111,9 +99,25 @@ const ParkingLotDetail = styled(Element)`
     margin: 0;
   }
 
+  .modal-title{
+    font-weight: bold;
+  }
+
   .modal-content{
     height: 100vh;
   }
+
+  .info-group{
+    display:flex;
+    .fare{
+      span{margin-left: 10px;}
+    }
+    &.fare-wrap{
+      background: #D0E8D1;
+      border-radius: 10px;
+    }
+  }
+
   @media(min-width:796px){
     --bs-modal-border-radius: 0.5rem;
     .modal-dialog{
