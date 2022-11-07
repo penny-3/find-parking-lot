@@ -15,6 +15,12 @@
   --dark-0: #FFFFFF;
 }
 
+/* html */
+html{
+  overflow-y: scroll;
+  overscroll-behavior-y: none;
+}
+
 /* main */
 .main-view{
   height: 100vh;

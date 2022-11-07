@@ -51,7 +51,7 @@ const Element = ({ className, park}) => {
             </div>
             <div className='info-group align-items-center mb-1'>
               <i className="fa-solid fa-phone"></i>
-              <p className='info detail'>{park.tel}</p>
+              <p className='info detail'>{park.tel | '未提供'}</p>
             </div>
             <hr></hr>
             <p className='my-2'>{park.summary}</p>   
