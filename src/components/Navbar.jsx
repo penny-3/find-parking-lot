@@ -99,7 +99,7 @@ const Element = ({ className, parks, available, paramsId, loading}) => {
 	return (
 		<div className={className + ' col-md-4 h-100 pb-4 px-4 nav-wrap'}>
       <h2 className='unfound' hidden = {!loading}>搜尋中請稍候...</h2>
-      <div className='nav-container pb-5' hidden={loading}>
+      <div className='nav-container' hidden={loading}>
         <div className='d-md-none text-center pb-1 pt-2 toggle-up'>
           <i className="fa-solid fa-angle-up" onClick={toggleUp}></i>
         </div>
@@ -156,6 +156,7 @@ const Navbar = styled(Element)`
   
   .nav-container{
     height: 100vh;
+    padding-bottom: 80px;
   }
 
   .card-list{
@@ -246,6 +247,9 @@ const Navbar = styled(Element)`
     box-shadow: rgb(0 0 0 / 25%) -4px 0px 12px 0px;
     overflow: hidden;
     height: 100vh !important;
+    .nav-container{
+      padding-bottom: 3rem;
+    }
   }  
 `
 export default Navbar

@@ -210,6 +210,12 @@ const MyMap = styled(Element)`
     padding: 5px 10px;
     i{margin-right: 10px;}
   }
+
+  @media(min-width: 769px){
+    .current-position-tip{
+      display: none;
+    }
+  }
 `
 
 const mapStateToProps  = (state) => ({parks:state.parks, position: state.position})

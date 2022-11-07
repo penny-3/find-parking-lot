@@ -99,6 +99,10 @@ const ParkingLotDetail = styled(Element)`
     margin: 0;
   }
 
+  .cancel{
+    font-size: 24px;
+  }
+
   .modal-title{
     font-weight: bold;
   }
