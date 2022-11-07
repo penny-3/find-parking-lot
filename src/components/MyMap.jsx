@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from "react"
-import { useMapEvent } from 'react-leaflet/hooks'
+import React, { useState, useEffect } from "react"
 import { MapContainer, TileLayer, Marker, Popup, useMap, Circle } from 'react-leaflet'
 import L from 'leaflet'
 import icon from 'leaflet/dist/images/marker-icon.png'
@@ -10,6 +9,7 @@ import Control from 'react-leaflet-custom-control'
 import { updatePosition , getParks} from '../actions/mapActions'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 
 let DefaultIcon = L.icon({
@@ -74,7 +74,7 @@ const Element = ({ className , paramsId}) => {
         if(lat && lng){
           map.setView([lat, lng])
         }
-      }, [lat, lng]);
+      }, [map,lat,lng]);
       return null
     }
 
@@ -95,7 +95,10 @@ const Element = ({ className , paramsId}) => {
     }
 
     function error() {
-      console.log('not support')
+      Swal.fire({
+        icon: 'warning',
+        title: '無法定位'
+      })
     }
 
     function sortMarker(paramsId,availablecar,availablemotor){
@@ -157,7 +160,7 @@ const Element = ({ className , paramsId}) => {
                    <h5 className="text-center">{park.name}</h5>
                     <p className="text-center mt-0 mb-3">剩餘車位：{ paramsId === 'car' ? park.availablecar | 0 : park.availablemotor | 0}</p>
                     <div className="text-center">
-                      <a href={google_url+park.lat+','+park.lng}>帶我去</a>
+                      <a href={google_url+park.lat+','+park.lng}>在 google map 上查看</a>
                     </div>
                  </Popup>
                </Marker>)     

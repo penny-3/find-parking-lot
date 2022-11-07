@@ -1,4 +1,4 @@
-import {GET_PARKS,UPDATE_DIS,UPDATE_POS,UPDATE_AVA} from '../types'
+import {GET_PARKS,UPDATE_DIS,UPDATE_POS} from '../types'
 
 const initialState = {
     parks:[],
@@ -90,7 +90,7 @@ function getCurrentDis(distance) {
     return distance
 }
 
-export default function(state = initialState, action){
+export default function getMapInfo(state = initialState, action){
     switch(action.type){
         case GET_PARKS:
     const nearest = []

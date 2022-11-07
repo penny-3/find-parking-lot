@@ -79,7 +79,7 @@ const Element = ({ className, parks, available, paramsId}) => {
     if(parks)
     updateParks(parks)
     store.dispatch(updateAva(parks,available))
-  },[parks])
+  },[parks,available])
 
   const toggleUp = (e) => {
     document.querySelector('.nav-wrap').classList.toggle('toggle')
@@ -128,7 +128,7 @@ const Element = ({ className, parks, available, paramsId}) => {
                     <p className='info'>{paramsId === 'car' ? park.totalcar : park.totalmotor }</p>
                   </div>
                   <div className='info-group d-flex align-items-center'>
-                    <div>{paramsId === 'car'?'剩餘車位:':'剩餘機車位：'}</div>
+                    <div>{paramsId === 'car'?'剩餘車位：':'剩餘機車位：'}</div>
                     <p className='info'>{(paramsId === 'car' ? park.availablecar : park.availablemotor) > 0 ? (paramsId === 'car' ? park.availablecar : park.availablemotor) : 0 }</p>
                   </div>
                 </div>
@@ -183,14 +183,29 @@ const Navbar = styled(Element)`
     margin-bottom: 20px;
   }
 
-  .card-body{
-    p{
-      font-size:14px;
+  .card{
+    .main-title{
       display:-webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 1;
       -webkit-box-orient: vertical;
       overflow:hidden;
-      color: var(--dark-70)
+    }
+
+    .card-body{
+      p{
+        font-size:14px;
+        display:-webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow:hidden;
+        color: var(--dark-70)
+      }
+    }
+  }
+
+  .card-footer{
+    .info-group + .info-group{
+      margin-left:10px;
     }
   }
 
@@ -205,15 +220,14 @@ const Navbar = styled(Element)`
       i{line-height:40px}
     }
     i{margin-right: 10px;}
-    p.info{display: contents;}
-  }
-
-  .card-footer{
-    .info-group + .info-group{
-      margin-left:10px;
+    .info{
+      display:-webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+       overflow:hidden;
     }
   }
-
+  
   .unfound{
     color: var(--secondary-color);
     text-align: center;

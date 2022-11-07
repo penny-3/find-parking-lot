@@ -5,7 +5,7 @@ const initialState = {
     loading:true
 }
 
-export default function(state = initialState, action){
+export default function getAvailable(state = initialState, action){
 
     switch(action.type){
 

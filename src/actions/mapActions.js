@@ -67,8 +67,9 @@ const updateAva = (parkData,availableData) => {
             availablecar: park.availablecar,
             availablemotor: park.availablemotor
           } 
-        newAvailable.push(parkData[i])    
+          newAvailable.push(parkData[i])    
         }
+        return newAvailable
       })
     }
     }
