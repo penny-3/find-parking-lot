@@ -99,7 +99,7 @@ const ParkingLotDetail = styled(Element)`
     margin: 0;
   }
 
-  .cancel{
+  .close{
     font-size: 24px;
   }
 
