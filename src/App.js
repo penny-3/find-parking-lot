@@ -1,10 +1,9 @@
-import React, {useState, Component} from 'react'
+import React, {Component} from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
 import {connect} from 'react-redux'
 import {getParks,getAvailable} from './actions/mapActions'
 import './Basic.css'
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css"
-import Swal from 'sweetalert2'
 import Navbar from "./components/Navbar"
 import MyMap from './components/MyMap'
 
