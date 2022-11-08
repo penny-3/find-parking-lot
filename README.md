@@ -1,70 +1,79 @@
-# Getting Started with Create React App
+**使用[臺北市停車場資訊](https://data.gov.tw/dataset/128435)串接地圖，提供使用者一個能快速查找停車位的網頁平台。**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+## 🗺目前的功能有：
 
-In the project directory, you can run:
+- 分區查詢功能
+- 顯示附近停車位
+- 顯示停車位詳細資料(e.g: 剩餘停車位、停車費費用…etc)
+- 定位功能
+- 停車位marker分類
+- 分頁切換 - 顯示車位 / 機車位資訊
 
-### `npm start`
+<img src="./public/screen-shot.png" alt="screen-shot" width="600"/>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📍部署位置
 
-### `npm test`
+[哪裡有停車位](https://ga686.github.io/find-parking-lot/#/car)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🧑‍💻開發環境
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+React
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+bootstrap
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+leaflet
 
-### `npm run eject`
+react leaflet
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+styled-components
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+react-router-dom
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+sweetalert2
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+axios
 
-## Learn More
+redux
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 👉****Get Started****
 
-### Code Splitting
+### **node版本為 v16.17.1**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**1. 打開終端機**
 
-### Analyzing the Bundle Size
+`cd 到你想電腦儲存的位置`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**2. 將專案下載下來**
 
-### Making a Progressive Web App
+`git clone https://github.com/ga686/find-parking-lot.git` 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**3. cd 到資料夾**
 
-### Advanced Configuration
+```
+cd find-parking-lot
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+```
 
-### Deployment
+**4. 安裝 npm 相關套件**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+`npm i`
 
-### `npm run build` fails to minify
+**5. 本地端執行程式**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+`npm start`
+
+1. 打包
+
+`npm run build`
+
+1. 測試
+
+`npm test`
