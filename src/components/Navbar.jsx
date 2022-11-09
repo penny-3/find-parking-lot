@@ -175,7 +175,7 @@ const Navbar = styled(Element)`
   }
 
   &.toggle{
-    height: 100vh !important;
+    height: 100% !important;
     .toggle-up{
       i{
         transform: rotate3d(1,0,0,180deg);
