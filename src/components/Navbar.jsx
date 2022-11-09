@@ -153,7 +153,7 @@ const Element = ({ className, parks, available, paramsId}) => {
 
 
 const Navbar = styled(Element)`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   height: 120px !important;
