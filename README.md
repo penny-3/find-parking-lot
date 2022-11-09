@@ -41,6 +41,8 @@ axios
 
 redux
 
+redux-thunk
+
 ---
 
 ## 👉 ****Get Started****
