@@ -14,7 +14,11 @@
   --dark-20: #FAFAFB;
   --dark-0: #FFFFFF;
 }
-
+/* html */
+html{
+  height: 100vh;
+  overflow: hidden;
+}
 
 /* main */
 .main-view{
