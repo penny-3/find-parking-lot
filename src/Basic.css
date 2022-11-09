@@ -15,11 +15,6 @@
   --dark-0: #FFFFFF;
 }
 
-/* html */
-html{
-  overflow-y: scroll;
-  overscroll-behavior-y: none;
-}
 
 /* main */
 .main-view{
@@ -85,5 +80,9 @@ p{
 .leaflet-marker-icon:first-child{ filter: hue-rotate(120deg); }
 
 @media(min-width:769px){
+  html{
+    overflow-y: scroll;
+    overscroll-behavior-y: none;
+  }
   .main-view{height: 100vh;}
 }
