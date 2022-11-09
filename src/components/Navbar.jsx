@@ -162,7 +162,7 @@ const Navbar = styled(Element)`
   transition: height 0.5s;
   
   .nav-container{
-    height: 100vh;
+    height: 100%;
     padding-bottom: 80px;
   }
 
