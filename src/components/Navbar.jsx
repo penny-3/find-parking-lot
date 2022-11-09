@@ -185,7 +185,7 @@ const Navbar = styled(Element)`
   
   .toggle-up{
     i{
-      font-size:20px;
+      font-size:36px;
       cursor:pointer;
       transition: transform 0.5s;
     }
