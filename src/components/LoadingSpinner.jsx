@@ -5,7 +5,7 @@ import styled from 'styled-components'
 const Element = ({className, hidden}) => {
 
   return (
-    <div className={className} hidden = {!hidden}>
+    <div className={className} hidden = {!hidden}> 
       <div className="bouncing-loader d-flex justify-content-center">
         <div />
         <div />

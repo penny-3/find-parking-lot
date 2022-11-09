@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import LoadingSpinner from './LoadingSpinner'
 
-
+//預設icon樣式
 let DefaultIcon = L.icon({
     iconUrl: icon,
     shadowUrl: iconShadow,
@@ -23,7 +23,7 @@ let DefaultIcon = L.icon({
 });
 
 L.Marker.prototype.options.icon = DefaultIcon
-
+//車位大於十為綠色icon
 const greenIcon = new L.Icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -32,7 +32,7 @@ const greenIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 })
-
+//車位小於十為橘色icon
 const orangeIcon = new L.Icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-orange.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -41,7 +41,7 @@ const orangeIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 })
-
+//沒有車位時歸類到灰色icon
 const greyIcon = new L.Icon({
     iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-grey.png',
     shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -51,13 +51,15 @@ const greyIcon = new L.Icon({
     shadowSize: [41, 41]
 })
 
-const Element = ({ className , paramsId, loading}) => {
+const Element = ({ className , paramsId}) => {
     const newState = store.getState()
     const [getParksNow , updateParks] = useState([])
     const [getPos, updatePos] = useState([25.033671, 121.564427])
     const [getDis, updateDis ] = useState(0.3)
+    const [isLoading, updateLoadingState ] = useState(false)
     
     useEffect(() => {
+      updateLoadingState(true)
       if(newState.parks.parks){
         updateParks(newState.parks.parks)
       }
@@ -67,8 +69,9 @@ const Element = ({ className , paramsId, loading}) => {
       if(newState.all.distance){
         updateDis(newState.all.distance)
       }
+      updateLoadingState(false)
     },[newState])
-
+    //定位
     const Recenter = ({lat,lng}) => {
       const map = useMap()
       useEffect(() => {
@@ -78,66 +81,69 @@ const Element = ({ className , paramsId, loading}) => {
       }, [map,lat,lng]);
       return null
     }
-
+    //據力範圍圓圈顏色
     const fillBlueOptions = { fillColor: 'blue' }
-
+    //點擊定位按鈕更新目前位置
     const UpdateCurrentPos = (e) => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error)
+        updateLoadingState(true)
+        navigator.geolocation.getCurrentPosition(successGetPos, errorGetPos)
       }
     }
-
-    function success(position){
+    //定位成功時更新目前位置，並重新抓取附近停車位位置
+    function successGetPos(position){
       const lat = position.coords.latitude;
       const lng = position.coords.longitude
       const latlng = lat.toString() + ',' + lng.toString()
       store.dispatch(updatePosition(latlng))
       store.dispatch(getParks())
+      updateLoadingState(false)
     }
-
-    function error() {
+    //定位失敗，跳出通知
+    function errorGetPos() {
+      updateLoadingState(false)
       Swal.fire({
         icon: 'warning',
         title: '無法定位'
       })
     }
-
+    //marker 顏色分類
     function sortMarker(paramsId,availablecar,availablemotor){
-       let icon = greyIcon
+       let markerIcon = greyIcon
       if(paramsId === 'car' && availablecar){
         if(availablecar > 10){
-          icon = greenIcon
-          return icon
+          markerIcon = greenIcon
+          return markerIcon
         }else if( 10 > availablecar && availablecar > 0){
-          icon = orangeIcon
-          return icon
+          markerIcon = orangeIcon
+          return markerIcon
         }
       }
       if(paramsId === 'moto' && availablemotor){
         if(availablemotor > 10){
-          icon = greenIcon
-          return icon
+          markerIcon = greenIcon
+          return markerIcon
         }else if( 10 > availablemotor && availablemotor > 0){
-          icon = orangeIcon
-          return icon
+          markerIcon = orangeIcon
+          return markerIcon
         }
       }
-      return icon
+      return markerIcon
     }
-
+    //點擊marker時，改變marker尺寸
     const changeMarkerOnClick = (e) => {
       document.querySelectorAll('.leaflet-marker-icon').forEach((item,idx) => {
         item.classList.remove('active')
       })
       e.target._icon.classList.add("active")
     }
-
+    //外聯連結-google經緯度搜尋
     const google_url = 'https://www.google.com/maps/search/?api=1&map_action=map&zoom=16&query='
 
     return (
       <div className={className + ' col-md-8'}>
-        <LoadingSpinner hidden={loading}></LoadingSpinner>
-        <div hidden={loading}>
+        <LoadingSpinner hidden={isLoading}></LoadingSpinner>
+        <div hidden={isLoading}>
           <MapContainer center={[25.033671, 121.564427]} zoom={17} style={{height: '100vh'}} >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

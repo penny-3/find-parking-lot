@@ -5,7 +5,7 @@ const initialState = {
     loading:true
 }
 
-export default function getAvailable(state = initialState, action){
+export default function getAvailablePark(state = initialState, action){
 
     switch(action.type){
 

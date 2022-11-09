@@ -6,15 +6,16 @@ import store from '../store'
 
 
 const Element = ({ className}) => {
+  //預設select未點擊狀態
   const[default_distance,updateDefault_distance] = useState(true)
   const[default_scope,updateDefault_scope] = useState(true)
-
+  //更新區域定位
   const handleChangeScope = (e) => {
     updateDefault_scope(false)
     store.dispatch(updatePosition(e.target.value))
     store.dispatch(getParks())
   }
-
+  //更新距離
   const handleChangeDistance = (e) => {
     updateDefault_distance(false)
     store.dispatch(updateDistance(Number(e.target.value)))

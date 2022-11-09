@@ -8,7 +8,7 @@ const initialState = {
     avaliable: []
 }
 
-
+//twd97座標轉換，並回傳資料lat,lng
 function twd97_to_latlng($x, $y) {
   var pow = Math.pow, M_PI = Math.PI
   var sin = Math.sin, cos = Math.cos, tan = Math.tan
@@ -58,7 +58,7 @@ function twd97_to_latlng($x, $y) {
     lng: $lng
   }
 }
-
+//計算目前位置與停車位距離，並回傳distance
 function distance(lat1, lon1, lat2, lon2, unit) {
     	var radlat1 = Math.PI * lat1/180
     	var radlat2 = Math.PI * lat2/180
@@ -75,14 +75,14 @@ function distance(lat1, lon1, lat2, lon2, unit) {
     	if (unit==="N") { dist = dist * 0.8684 }
     	return dist
 }
-
+//處理pos值為空的狀況
 function getCurrentPos(position) {
     if(!position){
         return [25.033671, 121.564427]
     }
     return position
 }
-
+//處理distance值為空的狀況
 function getCurrentDis(distance) {
     if(!distance){
         return 0.3
@@ -93,44 +93,44 @@ function getCurrentDis(distance) {
 export default function getMapInfo(state = initialState, action){
     switch(action.type){
         case GET_PARKS:
-    const nearest = []
-
-    const all = action.payload.data.park.map((park) => {
-        return park = {
-            ...park,
-            lat: twd97_to_latlng(park.tw97x,park.tw97y).lat,
-            lng: twd97_to_latlng(park.tw97x,park.tw97y).lng
-        }
-   })
-
-    const newcurrentPos = getCurrentPos(state.currentPos)
-    const newcurrentDis = getCurrentDis(state.distance)
-    //Sort your locations array by distance (nearest to furthest)
-    for (var i = 0; i < all.length; i++) {
-        //if this location is within 0.3KM of the user, add it to the list
-      if (distance( Number(newcurrentPos[0]), Number(newcurrentPos[1]), all[i].lat, all[i].lng, "K") <= newcurrentDis) { 
-        all[i] = {
-          ...all[i],
-          distance: Math.round(distance( Number(newcurrentPos[0]), Number(newcurrentPos[1]), all[i].lat, all[i].lng, "K")* 100)/100
-        }            
-        nearest.push(all[i])
-      }
-    }
-        return {
-            ...state,
-            parks: nearest,
-            loading:false
-        }
-            case UPDATE_POS:
+            const nearest = []
+            //轉換座標
+            const all = action.payload.data.park.map((park) => {
+                return park = {
+                    ...park,
+                    lat: twd97_to_latlng(park.tw97x,park.tw97y).lat,
+                    lng: twd97_to_latlng(park.tw97x,park.tw97y).lng
+                }
+            })
+            //更新目前位置
+            const newcurrentPos = getCurrentPos(state.currentPos)
+            const newcurrentDis = getCurrentDis(state.distance)
+            //Sort your locations array by distance (nearest to furthest)
+            for (var i = 0; i < all.length; i++) {
+                //if this location is within 0.3KM of the user, add it to the list
+                if (distance( Number(newcurrentPos[0]), Number(newcurrentPos[1]), all[i].lat, all[i].lng, "K") <= newcurrentDis) { 
+                    all[i] = {
+                    ...all[i],
+                    distance: Math.round(distance( Number(newcurrentPos[0]), Number(newcurrentPos[1]), all[i].lat, all[i].lng, "K")* 100)/100
+                    }            
+                    nearest.push(all[i])
+                }
+            }
             return {
-            ...state,
-            currentPos: action.payload,
-        }
+                ...state,
+                parks: nearest,
+                loading:false
+            }
+            case UPDATE_POS:
+                return {
+                    ...state,
+                    currentPos: action.payload,
+                }
             case UPDATE_DIS:
             return {
-            ...state,
-            distance: action.payload,
-        }
+                ...state,
+                distance: action.payload,
+            }
 
         default: return state
     }

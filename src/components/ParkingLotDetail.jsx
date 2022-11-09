@@ -5,14 +5,14 @@ import store from '../store'
 
 
 const Element = ({ className, park}) => {
-
+  //車費資料
   const [workingday, updateWorkingday] = useState([])
   const [holiday, updateHoliday] = useState([])
-
+  //關閉彈跳視窗
   const closeModal = (e) => {
     document.querySelector('.modal').classList.remove('show')
   }
-
+  //外聯連結-google經緯度搜尋
   const google_url = 'https://www.google.com/maps/search/?api=1&map_action=map&zoom=16&query='
 
     useEffect(() => {
@@ -51,7 +51,7 @@ const Element = ({ className, park}) => {
             </div>
             <div className='info-group align-items-center mb-1'>
               <i className="fa-solid fa-phone"></i>
-              <p className='info detail'>{park.tel | '未提供'}</p>
+              <p className='info detail'>{park.tel || '未提供'}</p>
             </div>
             <hr></hr>
             <p className='my-2'>{park.summary}</p>   

@@ -8,7 +8,8 @@ import '../Basic.css'
 
 
 
-const Element = ({ className, parks, available, paramsId, loading}) => {
+const Element = ({ className, parks, available, paramsId}) => {
+  //預設空的park data
   let empty = {
       "id" : "0",
       "area" : "",
@@ -72,23 +73,27 @@ const Element = ({ className, parks, available, paramsId, loading}) => {
         } ]
       }
   }
+  const [isLoading, updateLoadingState ] = useState(false)
   const [newParks,updateParks] = useState([])
   const [target, updateTarget] = useState(empty)
- 
+  //取得parks資料，同時比較park與available車位資料，並返還剩餘車位
   useEffect(()=>{
+    updateLoadingState(true)
     if(parks)
     updateParks(parks)
     store.dispatch(updateAva(parks,available))
+    updateLoadingState(false)
   },[parks,available])
-
+  //手機檢視卡片列按鈕
   const toggleUp = (e) => {
     document.querySelector('.nav-wrap').classList.toggle('toggle')
   }
+  //開啟車位詳細資料彈跳視窗
   const openModal = (e) => {
     document.querySelector('.modal').classList.add('show')
     updateTarget(newParks.filter((park) => park.id === e.currentTarget.id)[0])
   }
-
+  //點擊卡片時更新地圖位置
   const updateCurrentPosbyCard = (e) => {
     const target = newParks.filter(park => park.id === e.currentTarget.id)
     const latlng = target[0].lat + ',' + target[0].lng
@@ -98,8 +103,8 @@ const Element = ({ className, parks, available, paramsId, loading}) => {
 
 	return (
 		<div className={className + ' col-md-4 h-100 pb-4 px-4 nav-wrap'}>
-      <h2 className='unfound' hidden = {!loading}>搜尋中請稍候...</h2>
-      <div className='nav-container' hidden={loading}>
+      <h2 className='unfound' hidden={isLoading === true ? false : true}>搜尋中請稍候...</h2>
+      <div className='nav-container' hidden={isLoading}>
         <div className='d-md-none text-center pb-1 pt-2 toggle-up'>
           <i className="fa-solid fa-angle-up" onClick={toggleUp}></i>
         </div>
@@ -137,7 +142,9 @@ const Element = ({ className, parks, available, paramsId, loading}) => {
               )
             }
           )}
-          <h2 className='unfound' hidden = {newParks.length > 0 ? true : false}>Oops! 查詢不到停車場<br/>╮(╯_╰)╭</h2>
+          <div hidden={isLoading === true ? false : true}>
+            <h2 className='unfound' hidden = {newParks.length > 0 ? true : false}>Oops! 查詢不到停車場<br/>╮(╯_╰)╭</h2>
+          </div>
         </div>
       </div>
     </div>
