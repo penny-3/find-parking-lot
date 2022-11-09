@@ -257,6 +257,10 @@ const Navbar = styled(Element)`
     .nav-container{
       padding-bottom: 3rem;
     }
+
+    &.toggle{
+      height: 100vh !important;
+    }
   }  
 `
 export default Navbar
