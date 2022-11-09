@@ -32,7 +32,7 @@ const Element = ({ className, park}) => {
         }
       }
       getFee()
-    },[])
+    },[park])
 
 	return (
     <div className={ className + " modal"} tabIndex="-1" role="dialog">
@@ -100,7 +100,8 @@ const ParkingLotDetail = styled(Element)`
   }
 
   .close{
-    font-size: 24px;
+    font-size: 30px;
+    color: var(--dark-100) !important;
   }
 
   .modal-title{
