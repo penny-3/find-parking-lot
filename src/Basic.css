@@ -23,7 +23,7 @@ html{
 
 /* main */
 .main-view{
-  height: 100vh;
+  height: 100%;
 }
 
 /* titles */
@@ -83,3 +83,7 @@ p{
 .leaflet-marker-icon{object-fit: contain;}
 
 .leaflet-marker-icon:first-child{ filter: hue-rotate(120deg); }
+
+@media(min-width:769px){
+  .main-view{height: 100vh;}
+}
