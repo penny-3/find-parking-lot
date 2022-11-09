@@ -82,7 +82,7 @@ const Element = ({ className, parks, available, paramsId}) => {
     if(parks)
     updateParks(parks)
     store.dispatch(updateAva(parks,available))
-    updateLoadingState(false)
+    updateLoadingState(store.getState().all.loading)
   },[parks,available])
   //手機檢視卡片列按鈕
   const toggleUp = (e) => {
@@ -142,7 +142,7 @@ const Element = ({ className, parks, available, paramsId}) => {
               )
             }
           )}
-          <div hidden={isLoading === true ? false : true}>
+          <div hidden={isLoading}>
             <h2 className='unfound' hidden = {newParks.length > 0 ? true : false}>Oops! 查詢不到停車場<br/>╮(╯_╰)╭</h2>
           </div>
         </div>
