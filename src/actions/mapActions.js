@@ -5,7 +5,7 @@ import axios from 'axios'
 const getParks = () => async dispatch => {
     
     try{
-        const res = await axios.get(`https://ga686.github.io/parking-api/parks.json`)
+        const res = await axios.get(`https://penny-3.github.io/parking-api/parks.json`)
         dispatch( {
             type: GET_PARKS,
             payload: res.data
@@ -23,7 +23,7 @@ const getParks = () => async dispatch => {
 const getAvailable = () => async dispatch => {
     
     try{
-        const res = await axios.get(`https://ga686.github.io/parking-api/avaliable_park.json`)
+        const res = await axios.get(`https://penny-3.github.io/parking-api/avaliable_park.json`)
         dispatch( {
             type: GET_AVA,
             payload: res.data
